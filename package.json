@@ -1,0 +1,32 @@
+{
+  "name": "blogfu-server",
+  "version": "1.0.0",
+  "description": "A Koa-based server for BlogFu.me",
+  "main": "server.js",
+  "scripts": {
+    "start": "supervisor server.js"
+  },
+  "author": "Chris \"IKnowBashFu\" Vollink",
+  "repository": {
+      "type": "git",
+      "url": "https://github.com/IKnowBashFu/blogfu-server.git"
+  },
+  "contributors": [
+    {
+      "name": "Dillon Modine-Thuen",
+      "email": "inquiry@itsyuka.pw",
+      "url": "https://github.com/itsyuka"
+    }
+  ],
+  "license": "JSON",
+  "dependencies": {
+    "bcrypt": "^1.0.3",
+    "jsonwebtoken": "^8.0.1",
+    "koa": "^2.3.0",
+    "koa-body": "^2.5.0",
+    "koa-router": "^7.2.1",
+    "mongoose": "^4.12.0",
+    "mongoose-named-scopes": "^1.0.1",
+    "uuid": "^3.1.0"
+  }
+}
