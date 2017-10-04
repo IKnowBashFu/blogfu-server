@@ -4,12 +4,15 @@
   "description": "A Koa-based server for BlogFu.me",
   "main": "server.js",
   "scripts": {
-    "start": "supervisor server.js"
+    "start": "supervisor dist/server.js",
+    "debug": "ENV=debug supervisor dist/server.js",
+    "build": "gulp",
+    "watch": "gulp watch"
   },
   "author": "Chris \"IKnowBashFu\" Vollink",
   "repository": {
-      "type": "git",
-      "url": "https://github.com/IKnowBashFu/blogfu-server.git"
+    "type": "git",
+    "url": "https://github.com/IKnowBashFu/blogfu-server.git"
   },
   "contributors": [
     {
@@ -20,6 +23,7 @@
   ],
   "license": "JSON",
   "dependencies": {
+    "babel-core": "^6.26.0",
     "bcrypt": "^1.0.3",
     "jsonwebtoken": "^8.0.1",
     "koa": "^2.3.0",
@@ -28,5 +32,11 @@
     "mongoose": "^4.12.0",
     "mongoose-named-scopes": "^1.0.1",
     "uuid": "^3.1.0"
+  },
+  "devDependencies": {
+    "babel-preset-env": "^1.6.0",
+    "gulp": "^3.9.1",
+    "gulp-babel": "^7.0.0",
+    "gulp-watch": "^4.3.11"
   }
 }
