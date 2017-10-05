@@ -14,7 +14,7 @@ var _mongooseNamedScopes2 = _interopRequireDefault(_mongooseNamedScopes);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var UserSchema = _mongoose2.default.Schema({
+const UserSchema = (0, _mongoose.Schema)({
     username: {
         type: String,
         unique: true,
@@ -48,8 +48,8 @@ var UserSchema = _mongoose2.default.Schema({
         type: String,
         required: true
     },
-    following: [{ type: _mongoose2.default.Schema.Types.ObjectId, ref: 'User' }],
-    blocked: [{ type: _mongoose2.default.Schema.Types.ObjectId, ref: 'User' }],
+    following: [{ type: _mongoose.Schema.Types.ObjectId, ref: 'User' }],
+    blocked: [{ type: _mongoose.Schema.Types.ObjectId, ref: 'User' }],
     createdAt: {
         type: Date,
         default: Date.now

@@ -1,12 +1,9 @@
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
-import mongoose from 'mongoose';
-import uuid from 'uuid';
+import { v4 } from 'uuid';
 
 import User from '../../../models/user';
 import Token from '../../../models/token';
-
-import { config } from '../../../config/config';
 
 export const login = async (ctx) => {
     let { username, password } = ctx.request.body;
@@ -16,7 +13,7 @@ export const login = async (ctx) => {
         ctx.body = {
             response: 'Bad Request',
             information: !username && !password ? 'No username and password submitted' : !username ? 'No username submitted' : 'No password submitted'
-        }
+        };
         return;
     }
 
@@ -27,7 +24,7 @@ export const login = async (ctx) => {
         ctx.body = {
             response: 'Bad Request',
             information: 'Wrong username or password'
-        }
+        };
         return;
     }
 
@@ -38,7 +35,7 @@ export const login = async (ctx) => {
         ctx.body = {
             response: 'Bad Request',
             information: 'Wrong username or password'
-        }
+        };
         return;
     }
 
@@ -49,7 +46,7 @@ export const login = async (ctx) => {
         ctx.body = {
             response: 'Internal Server Error',
             information: tokens.error
-        }
+        };
         return;
     }
     ctx.status = 200;
@@ -60,18 +57,18 @@ export const login = async (ctx) => {
         accessToken: tokens.accessToken,
         refreshToken: tokens.refreshToken
     }
-}
+};
 
 async function generateTokens(userId) {
-    let refreshId = uuid.v4();
+    let refreshId = v4();
 
     let accessToken = jwt.sign({
         userId: userId
-    }, config.secret, { expiresIn: '1h', audience: 'access' });
+    }, ctx.config.secret, { expiresIn: '1h', audience: 'access' });
 
     let refreshToken = jwt.sign({
         userId: userId
-    }, config.secret, { expiresIn: '1y', audience: 'refresh', jwtid: refreshId });
+    }, ctx.config.secret, { expiresIn: '1y', audience: 'refresh', jwtid: refreshId });
 
     let token = new Token({
         tokenUUID: refreshId

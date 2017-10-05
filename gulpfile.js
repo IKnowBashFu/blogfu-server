@@ -5,7 +5,11 @@ const watch = require('gulp-watch');
 gulp.task('default', () => {
     gulp.src('src/**/*.js')
         .pipe(babel({
-            presets: ['env']
+            presets: [['env', {
+                "targets": {
+                    "node": "8.5.0"
+                }
+            }]]
         }))
         .pipe(gulp.dest('dist'))
 });

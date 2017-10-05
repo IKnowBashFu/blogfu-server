@@ -14,14 +14,14 @@ var _mongooseNamedScopes2 = _interopRequireDefault(_mongooseNamedScopes);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var twatSchema = _mongoose2.default.Schema({
+const twatSchema = (0, _mongoose.Schema)({
     content: {
         type: String,
         maxlength: 255,
         required: true
     },
     author: {
-        type: _mongoose2.default.Schema.Types.ObjectId, ref: 'User'
+        type: _mongoose.Schema.Types.ObjectId, ref: 'User'
     },
     createdAt: {
         type: Date,

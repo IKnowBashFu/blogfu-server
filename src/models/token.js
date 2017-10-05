@@ -1,7 +1,7 @@
-import mongoose from 'mongoose';
+import mongoose, { Schema } from 'mongoose';
 import namedscopes from 'mongoose-named-scopes';
 
-const TokenSchema = mongoose.Schema({
+const TokenSchema = Schema({
     tokenUUID: {
         type: String,
         unique: true,

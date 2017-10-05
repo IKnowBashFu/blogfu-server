@@ -14,7 +14,7 @@ var _mongooseNamedScopes2 = _interopRequireDefault(_mongooseNamedScopes);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var TokenSchema = _mongoose2.default.Schema({
+const TokenSchema = (0, _mongoose.Schema)({
     tokenUUID: {
         type: String,
         unique: true,
@@ -33,10 +33,8 @@ TokenSchema.index({ createdAt: 1 }, { expireAfterSeconds: 60 * 60 * 24 * 365 });
 TokenSchema.plugin(_mongooseNamedScopes2.default);
 
 TokenSchema.scope('exists', function (token_uuid) {
-    var _this = this;
-
-    return new Promise(function (resolve, reject) {
-        _this.findOne().where('tokenUUID').equals(token_uuid).exec(function (err, queried_token) {
+    return new Promise((resolve, reject) => {
+        this.findOne().where('tokenUUID').equals(token_uuid).exec((err, queried_token) => {
             if (err || queried_token === null) {
                 resolve(false);
             } else {

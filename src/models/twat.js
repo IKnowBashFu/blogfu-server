@@ -1,14 +1,14 @@
-import mongoose from 'mongoose';
+import mongoose, { Schema } from 'mongoose';
 import namedscopes from 'mongoose-named-scopes';
 
-const twatSchema = mongoose.Schema({
+const twatSchema = Schema({
     content: {
         type: String,
         maxlength: 255,
         required: true
     },
     author: {
-        type: mongoose.Schema.Types.ObjectId, ref: 'User'
+        type: Schema.Types.ObjectId, ref: 'User'
     },
     createdAt: {
         type: Date,

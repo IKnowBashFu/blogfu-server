@@ -16,10 +16,14 @@ var _coffee = require('./coffee');
 
 var _coffee2 = _interopRequireDefault(_coffee);
 
+var _startup = require('./startup');
+
+var _startup2 = _interopRequireDefault(_startup);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var router = (0, _koaRouter2.default)({ prefix: '/v1' });
+const router = (0, _koaRouter2.default)({ prefix: '/v1' });
 
-router.use(_auth2.default.routes(), _coffee2.default.routes());
+router.use(_auth2.default.routes(), _coffee2.default.routes(), _startup2.default.routes());
 
 exports.default = router;

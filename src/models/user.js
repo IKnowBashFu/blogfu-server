@@ -1,7 +1,7 @@
-import mongoose from 'mongoose';
+import mongoose, { Schema } from 'mongoose';
 import namedscopes from 'mongoose-named-scopes';
 
-const UserSchema = mongoose.Schema({
+const UserSchema = Schema({
     username: {
         type: String,
         unique: true,
@@ -35,8 +35,8 @@ const UserSchema = mongoose.Schema({
         type: String,
         required: true
     },
-    following: [{type: mongoose.Schema.Types.ObjectId, ref: 'User'}],
-    blocked: [{type: mongoose.Schema.Types.ObjectId, ref: 'User'}],
+    following: [{type: Schema.Types.ObjectId, ref: 'User'}],
+    blocked: [{type: Schema.Types.ObjectId, ref: 'User'}],
     createdAt: {
         type: Date,
         default: Date.now

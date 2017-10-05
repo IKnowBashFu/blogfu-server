@@ -14,7 +14,7 @@ var _v2 = _interopRequireDefault(_v);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var router = (0, _koaRouter2.default)();
+const router = (0, _koaRouter2.default)();
 
 router.use(_v2.default.routes());
 

@@ -16,62 +16,41 @@ var _mongoose2 = _interopRequireDefault(_mongoose);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
+let config;
+let envConf = {};
+if (process.env.PORT) envConf['port'] = process.env.PORT;
+if (process.env.ENV) envConf['debug'] = process.env.ENV === 'debug';
 
-var port = process.env.PORT || 8081;
-var debug = process.env.ENV == 'debug';
+try {
+    config = require('./config/config');
+} catch (e) {
+    console.warn('You really need to create a config');
+    process.exit(0);
+}
+config = Object.assign(config, envConf);
+const App = new _koa2.default();
 
-var App = new _koa2.default();
+App.context.config = config;
 
 _mongoose2.default.Promise = global.Promise;
-_mongoose2.default.connect('mongodb://mongo-server:27017/blogfu', {
+_mongoose2.default.connect(config.connection, {
     useMongoClient: true
 });
 
-App.use(function () {
-    var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(ctx, next) {
-        var startTime, timeSpent;
-        return regeneratorRuntime.wrap(function _callee$(_context) {
-            while (1) {
-                switch (_context.prev = _context.next) {
-                    case 0:
-                        if (!debug) {
-                            _context.next = 8;
-                            break;
-                        }
-
-                        startTime = _perf_hooks.performance.now();
-                        _context.next = 4;
-                        return next();
-
-                    case 4:
-                        timeSpent = _perf_hooks.performance.now() - startTime;
-
-                        ctx.set('X-Response-Time', timeSpent.toFixed(3) + 'ms');
-                        _context.next = 10;
-                        break;
-
-                    case 8:
-                        _context.next = 10;
-                        return next();
-
-                    case 10:
-                    case 'end':
-                        return _context.stop();
-                }
-            }
-        }, _callee, undefined);
-    }));
-
-    return function (_x, _x2) {
-        return _ref.apply(this, arguments);
-    };
-}());
+App.use(async (ctx, next) => {
+    if (config.debug) {
+        let startTime = _perf_hooks.performance.now();
+        await next();
+        let timeSpent = _perf_hooks.performance.now() - startTime;
+        ctx.set('X-Response-Time', timeSpent.toFixed(3) + 'ms');
+    } else {
+        await next();
+    }
+});
 
 App.use(_api2.default.routes());
 App.use(_api2.default.allowedMethods());
-
-App.listen(port, function () {
-    var serverStart = debug ? 'Server is listening on port ' + port + ' in debug mode' : 'Server is listening on port ' + port;
+App.listen(config.port, () => {
+    let serverStart = config.debug ? `Server is listening on port ${config.port} in debug mode` : `Server is listening on port ${config.port}`;
     console.log(serverStart);
 });
